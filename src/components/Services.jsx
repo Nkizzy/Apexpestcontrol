@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Services.css'
 import apexporch from '../assets/apexporch.jpg'
 import holes from '../assets/holes.jpg'
@@ -7,8 +7,10 @@ import pestvideo from '../assets/pestvideo.mp4'
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [videoStillUrl, setVideoStillUrl] = useState(null)
+  const [expandedMobileCards, setExpandedMobileCards] = useState(new Set())
   const videoRef = useRef(null)
   const capturingForStillRef = useRef(false)
+  const mobileCardRefs = useRef([])
 
   const TRIM_SECONDS = 2 / 3
 
@@ -48,6 +50,26 @@ const Services = () => {
       requestAnimationFrame(() => captureVideoStill(video))
     })
   }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.dataset.index, 10)
+            if (!isNaN(index)) {
+              setExpandedMobileCards((prev) => new Set([...prev, index]))
+            }
+          }
+        })
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    )
+    mobileCardRefs.current.forEach((el) => {
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
 
   const services = [
     {
@@ -102,13 +124,46 @@ const Services = () => {
           <p className="section-subtitle">Expert pest control solutions tailored to your needs</p>
         </div>
         
-        {/* Mobile Grid Layout */}
+        {/* Mobile Grid Layout - expand on scroll */}
         <div className="services-grid">
           {services.map((service, index) => (
-            <div key={index} className="service-card">
-              <h3 className="service-title">{service.title}</h3>
-              <p className="service-description">{service.description}</p>
-              <p className="service-price">{service.price}</p>
+            <div
+              key={index}
+              ref={(el) => { mobileCardRefs.current[index] = el }}
+              data-index={index}
+              className={`service-card service-card-mobile ${expandedMobileCards.has(index) ? 'mobile-expanded' : 'mobile-collapsed'}`}
+            >
+              <div className="service-card-header">
+                <h3 className="service-title">{service.title}</h3>
+                <p className="service-price">{service.price}</p>
+              </div>
+              <div className="service-card-expandable">
+                <p className="service-description">{service.description}</p>
+                {expandedMobileCards.has(index) && (
+                  <div className="service-card-media">
+                    {service.video ? (
+                      videoStillUrl ? (
+                        <img src={videoStillUrl} alt={service.title} className="service-video-still" />
+                      ) : (
+                        <video
+                          ref={videoRef}
+                          src={service.video}
+                          autoPlay
+                          muted
+                          playsInline
+                          controls
+                          className="service-video"
+                          onLoadedMetadata={handleVideoLoadedMetadata}
+                          onTimeUpdate={handleVideoTimeUpdate}
+                          onSeeked={handleVideoSeeked}
+                        />
+                      )
+                    ) : (
+                      <img src={service.image} alt={service.title} loading="eager" />
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>

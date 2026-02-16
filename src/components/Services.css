@@ -245,9 +245,21 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
+  /* Expand-on-scroll: collapse expandable until card is in view */
+  .service-card-expandable {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+  }
+
+  .service-card-mobile.mobile-expanded .service-card-expandable {
+    max-height: 2000px;
+    transition: max-height 0.5s ease-in;
+  }
 }
 
-/* Mobile: Show grid layout, hide tabbed */
+/* Mobile: Show grid layout, hide tabbed, expand cards on scroll */
 @media (max-width: 768px) {
   .services {
     padding: 3rem 1rem;
@@ -271,8 +283,51 @@
     display: none;
   }
 
-  .service-card {
-    padding: 2rem 1.5rem;
+  .service-card-mobile {
+    padding: 1.5rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .service-card-header {
+    margin-bottom: 0;
+  }
+
+  .service-card-mobile .service-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card-mobile .service-price {
+    margin-bottom: 0;
+  }
+
+  .service-card-mobile .service-description {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .service-card-media {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+  }
+
+  .service-card-media img,
+  .service-card-media .service-video,
+  .service-card-media .service-video-still {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .service-card-media .service-video,
+  .service-card-media .service-video-still {
+    object-fit: cover;
+    object-position: center 35%;
   }
 }
 
