@@ -109,7 +109,7 @@ const Services = () => {
 
   return (
     <section id="services" className="services">
-      {/* Preload mosquito video so it's ready when the tab is clicked */}
+      {/* Preload video and all images so they're ready when scrolling/tabbing */}
       <video
         src={pestvideo}
         preload="auto"
@@ -118,6 +118,16 @@ const Services = () => {
         aria-hidden="true"
         style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
       />
+      {services.map((service, index) => (
+        <img
+          key={`preload-${index}`}
+          src={service.image}
+          alt=""
+          loading="eager"
+          aria-hidden="true"
+          style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+        />
+      ))}
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">Our Services</h2>
