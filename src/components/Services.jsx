@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import './Services.css'
 import apexporch from '../assets/apexporch.jpg'
 import holes from '../assets/holes.jpg'
+import weeds from '../assets/weeds.jpg'
 import pestvideo from '../assets/pestvideo.mp4'
 
 const Services = () => {
@@ -13,6 +14,13 @@ const Services = () => {
   const mobileCardRefs = useRef([])
 
   const TRIM_SECONDS = 2 / 3
+
+  const handleImageError = (event) => {
+    const target = event.currentTarget
+    if (target.dataset.fallbackApplied === 'true') return
+    target.dataset.fallbackApplied = 'true'
+    target.src = target.dataset.fallbackSrc || apexporch
+  }
 
   const captureVideoStill = (video) => {
     if (!video || video.readyState < 2) return
@@ -89,7 +97,8 @@ const Services = () => {
       title: 'Weed & Vegetation Management',
       description: 'Targeted applications to remove unwanted plants and weeds from business and residential properties, to improve street appeal.',
       price: 'Starting at $65/month',
-      image: 'https://images.unsplash.com/photo-1563241527-3004b7be0dff?w=800&h=600&fit=crop'
+      image: weeds,
+      fallbackImage: 'https://images.unsplash.com/photo-1563241527-3004b7be0dff?w=800&h=600&fit=crop'
     },
     {
       title: 'Bed Bug Extermination',
@@ -122,7 +131,9 @@ const Services = () => {
         <img
           key={`preload-${index}`}
           src={service.image}
+          data-fallback-src={service.fallbackImage || apexporch}
           alt=""
+          onError={handleImageError}
           loading="eager"
           aria-hidden="true"
           style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
@@ -169,7 +180,7 @@ const Services = () => {
                         />
                       )
                     ) : (
-                      <img src={service.image} alt={service.title} loading="eager" />
+                      <img src={service.image} data-fallback-src={service.fallbackImage || apexporch} alt={service.title} onError={handleImageError} loading="eager" />
                     )}
                   </div>
                 )}
@@ -225,7 +236,7 @@ const Services = () => {
                       />
                     )
                   ) : (
-                    <img src={service.image} alt={service.title} loading="eager" />
+                    <img src={service.image} data-fallback-src={service.fallbackImage || apexporch} alt={service.title} onError={handleImageError} loading="eager" />
                   )}
                 </div>
               ))}

@@ -287,12 +287,18 @@
 @media (max-width: 768px) {
   .hero {
     min-height: 500px;
-    padding-top: 70px;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: clamp(5.5rem, 18vw, 7rem);
   }
 
   .hero-container {
     padding: 1rem;
-    padding-top: 1.5rem;
+    padding-top: 0.75rem;
+  }
+
+  .hero-content {
+    padding: 0.75rem 0 1rem;
   }
 
   .hero-logo-mobile {
@@ -306,10 +312,12 @@
 
   .hero-title {
     font-size: 4.2rem;
+    margin-bottom: 0.65rem;
   }
 
   .hero-subtitle {
     font-size: 1.4rem;
+    letter-spacing: 0.02em;
   }
 
   .hero-description {
@@ -317,19 +325,30 @@
     padding: 0;
   }
 
-  .btn {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-buttons .btn {
     padding: 0.9rem 2rem;
     font-size: 1rem;
   }
 
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btn {
+  .hero-buttons .btn-primary {
     width: 80%;
     max-width: 300px;
+  }
+
+  .hero-buttons .btn-secondary {
+    font-size: 0.9rem;
+    padding: 0.65rem 1.5rem;
+    width: auto;
+    max-width: 240px;
+    min-height: 44px;
+    box-sizing: border-box;
+    align-self: center;
   }
 
   .hero-gallery {
