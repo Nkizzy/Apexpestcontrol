@@ -1,5 +1,5 @@
 .gallery {
-  padding: 5rem 2rem;
+  padding: clamp(4rem, 6vw, 8rem) clamp(1.5rem, 3vw, 3rem);
   background: rgba(240, 240, 240, 1);
   position: relative;
   overflow: hidden;

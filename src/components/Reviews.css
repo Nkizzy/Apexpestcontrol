@@ -1,5 +1,5 @@
 .reviews {
-  padding: 5rem 2rem;
+  padding: clamp(4rem, 6vw, 8rem) clamp(1.5rem, 3vw, 3rem);
   background: var(--white);
   position: relative;
   z-index: 1;

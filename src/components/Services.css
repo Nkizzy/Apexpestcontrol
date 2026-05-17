@@ -1,5 +1,5 @@
 .services {
-  padding: 5rem 2rem;
+  padding: clamp(4rem, 6vw, 8rem) clamp(1.5rem, 3vw, 3rem);
   background: var(--white);
   position: relative;
   z-index: 1;
@@ -14,7 +14,7 @@
 }
 
 .section-title {
-  font-size: 3rem;
+  font-size: clamp(3rem, 3.5vw, 5rem);
   color: var(--text-dark);
   margin-bottom: 1rem;
   font-weight: 700;
@@ -22,7 +22,7 @@
 }
 
 .section-subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.3vw, 1.6rem);
   color: var(--text-light);
   max-width: 600px;
   margin: 0 auto;
@@ -101,12 +101,12 @@
 .service-tab {
   background: var(--light-bg);
   border: 2px solid transparent;
-  padding: 0.875rem 1.5rem;
+  padding: clamp(0.75rem, 1vw, 1.1rem) clamp(1.25rem, 1.5vw, 2rem);
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 1vw, 1.15rem);
   font-weight: 500;
   color: var(--text-dark);
   font-family: 'Roboto', sans-serif;
@@ -155,7 +155,7 @@
 }
 
 .service-content-title {
-  font-size: 2.5rem;
+  font-size: clamp(2.5rem, 3vw, 4rem);
   color: var(--text-dark);
   font-weight: 700;
   font-family: 'Montserrat', sans-serif;
@@ -166,13 +166,13 @@
 .service-content-price {
   color: var(--primary-color);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: clamp(1.5rem, 1.7vw, 2.1rem);
   margin: 0;
 }
 
 .service-content-description {
   color: var(--text-light);
-  font-size: 1.15rem;
+  font-size: clamp(1.1rem, 1.2vw, 1.4rem);
   line-height: 1.9;
   margin: 0;
   flex: 1;

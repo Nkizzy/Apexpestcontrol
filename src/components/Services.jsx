@@ -5,15 +5,14 @@ import holes from '../assets/holes.jpg'
 import weeds from '../assets/weeds.jpg'
 import pestvideo from '../assets/pestvideo.mp4'
 
+const TRIM_SECONDS = 2 / 3
+
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [videoStillUrl, setVideoStillUrl] = useState(null)
   const [expandedMobileCards, setExpandedMobileCards] = useState(new Set())
-  const videoRef = useRef(null)
   const capturingForStillRef = useRef(false)
   const mobileCardRefs = useRef([])
-
-  const TRIM_SECONDS = 2 / 3
 
   const handleImageError = (event) => {
     const target = event.currentTarget
@@ -118,27 +117,6 @@ const Services = () => {
 
   return (
     <section id="services" className="services">
-      {/* Preload video and all images so they're ready when scrolling/tabbing */}
-      <video
-        src={pestvideo}
-        preload="auto"
-        muted
-        playsInline
-        aria-hidden="true"
-        style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
-      />
-      {services.map((service, index) => (
-        <img
-          key={`preload-${index}`}
-          src={service.image}
-          data-fallback-src={service.fallbackImage || apexporch}
-          alt=""
-          onError={handleImageError}
-          loading="eager"
-          aria-hidden="true"
-          style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
-        />
-      ))}
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">Our Services</h2>
@@ -167,8 +145,8 @@ const Services = () => {
                         <img src={videoStillUrl} alt={service.title} className="service-video-still" />
                       ) : (
                         <video
-                          ref={videoRef}
                           src={service.video}
+                          poster={service.image}
                           autoPlay
                           muted
                           playsInline
@@ -211,35 +189,34 @@ const Services = () => {
               <p className="service-content-description">{activeService.description}</p>
             </div>
             <div className="service-content-image">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="service-image-wrap"
-                  style={{ display: index === activeTab ? 'block' : 'none' }}
-                  aria-hidden={index !== activeTab}
-                >
-                  {service.video ? (
-                    videoStillUrl ? (
-                      <img src={videoStillUrl} alt={service.title} className="service-video-still" />
-                    ) : (
-                      <video
-                        ref={videoRef}
-                        src={service.video}
-                        autoPlay
-                        muted
-                        playsInline
-                        controls
-                        className="service-video"
-                        onLoadedMetadata={handleVideoLoadedMetadata}
-                        onTimeUpdate={handleVideoTimeUpdate}
-                        onSeeked={handleVideoSeeked}
-                      />
-                    )
+              <div className="service-image-wrap">
+                {activeService.video ? (
+                  videoStillUrl ? (
+                    <img src={videoStillUrl} alt={activeService.title} className="service-video-still" />
                   ) : (
-                    <img src={service.image} data-fallback-src={service.fallbackImage || apexporch} alt={service.title} onError={handleImageError} loading="eager" />
-                  )}
-                </div>
-              ))}
+                    <video
+                      src={activeService.video}
+                      poster={activeService.image}
+                      autoPlay
+                      muted
+                      playsInline
+                      controls
+                      className="service-video"
+                      onLoadedMetadata={handleVideoLoadedMetadata}
+                      onTimeUpdate={handleVideoTimeUpdate}
+                      onSeeked={handleVideoSeeked}
+                    />
+                  )
+                ) : (
+                  <img
+                    src={activeService.image}
+                    data-fallback-src={activeService.fallbackImage || apexporch}
+                    alt={activeService.title}
+                    onError={handleImageError}
+                    loading="eager"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

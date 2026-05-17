@@ -47,16 +47,16 @@
 }
 
 .logo-image {
-  height: 45px;
+  height: clamp(40px, 4vh, 60px);
   width: auto;
-  max-width: 150px;
+  max-width: 180px;
   object-fit: contain;
   display: block;
 }
 
 .logo-text {
   color: var(--white);
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 1.8vw, 2.2rem);
   font-weight: 700;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -65,7 +65,7 @@
 
 .header-logo h1 {
   color: var(--white);
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 1.8vw, 2.2rem);
   font-weight: 700;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -84,8 +84,8 @@
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.9);
-  padding: 0.6rem 1.2rem;
-  font-size: 0.9rem;
+  padding: clamp(0.5rem, 0.7vw, 0.8rem) clamp(1rem, 1.2vw, 1.6rem);
+  font-size: clamp(0.85rem, 0.95vw, 1.1rem);
   font-weight: 500;
   font-family: 'Roboto', sans-serif;
   border-radius: 6px;
