@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
-import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook } from 'react-icons/fa'
 import './Contact.css'
+
+const FACEBOOK_PAGE_URL = 'https://www.facebook.com/apexofpestservices'
 
 const Contact = () => {
   // Set to true to enable the contact form
   const ENABLE_FORM = false
+  const [facebookBlocked, setFacebookBlocked] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,6 +15,12 @@ const Contact = () => {
     service: '',
     message: ''
   })
+
+  useEffect(() => {
+    fetch('https://connect.facebook.net/en_US/sdk.js', { mode: 'no-cors' })
+      .then(() => setFacebookBlocked(false))
+      .catch(() => setFacebookBlocked(true))
+  }, [])
 
   const handleChange = (e) => {
     setFormData({
@@ -62,17 +71,32 @@ const Contact = () => {
           {!ENABLE_FORM && (
             <div className="contact-facebook-embed">
               <h3 className="contact-facebook-title">Follow us on Facebook</h3>
-              <iframe
-                src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent('https://www.facebook.com/apexofpestservices')}&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true${import.meta.env.VITE_FACEBOOK_APP_ID ? `&appId=${import.meta.env.VITE_FACEBOOK_APP_ID}` : ''}`}
-                width="340"
-                height="500"
-                style={{ border: 'none', overflow: 'hidden', flex: 1, minHeight: 0 }}
-                scrolling="no"
-                frameBorder="0"
-                allowFullScreen={true}
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                title="Apex Pest Solutions Facebook"
-              />
+              {facebookBlocked ? (
+                <div className="facebook-blocked-fallback">
+                  <FaFacebook className="facebook-blocked-icon" />
+                  <p>Facebook is blocked by your browser or network.</p>
+                  <a
+                    href={FACEBOOK_PAGE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                  >
+                    Visit our Facebook Page
+                  </a>
+                </div>
+              ) : (
+                <iframe
+                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(FACEBOOK_PAGE_URL)}&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true${import.meta.env.VITE_FACEBOOK_APP_ID ? `&appId=${import.meta.env.VITE_FACEBOOK_APP_ID}` : ''}`}
+                  width="340"
+                  height="500"
+                  style={{ border: 'none', overflow: 'hidden', flex: 1, minHeight: 0 }}
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  title="Apex Pest Solutions Facebook"
+                />
+              )}
             </div>
           )}
           {ENABLE_FORM && (
