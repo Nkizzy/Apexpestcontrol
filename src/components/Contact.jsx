@@ -73,14 +73,14 @@ const Contact = () => {
               <h3 className="contact-facebook-title">Follow us on Facebook</h3>
               {facebookBlocked ? (
                 <div className="facebook-blocked-fallback">
-                  <FaFacebook className="facebook-blocked-icon" />
                   <p>Facebook is blocked by your browser or network.</p>
                   <a
                     href={FACEBOOK_PAGE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary"
+                    className="facebook-blocked-btn"
                   >
+                    <FaFacebook className="facebook-blocked-btn-icon" />
                     Visit our Facebook Page
                   </a>
                 </div>
